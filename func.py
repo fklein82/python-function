@@ -1,8 +1,6 @@
 import greenplumpython as gp
 from typing import List
 import dataclasses
-import sys
-
 
 
 
@@ -17,6 +15,12 @@ def main():
 
     print(abalone_test[:1])
     print(abalone_train[:1])
+
+
+    # -- Create function
+    # -- Need to specify the return type -> API will create the corresponding type in Greenplum to return a row
+    # -- Will add argument to change language extensions, currently plpython3u by default
+
     @dataclasses.dataclass
     class LinregType:
         model_name: str
@@ -29,15 +33,10 @@ def main():
         registered_model_name: str
         registered_model_version: str
 
-
-    # -- Create function
-    # -- Need to specify the return type -> API will create the corresponding type in Greenplum to return a row
-    # -- Will add argument to change language extensions, currently plpython3u by default
-
-
-
     @gp.create_column_function
     def linreg_func(length: List[float], shucked_weight: List[float], rings: List[int]) -> LinregType:
+        from typing import List
+        import dataclasses
         from sklearn.linear_model import LinearRegression
         import numpy as np
         import pickle
@@ -46,6 +45,19 @@ def main():
         import os
         os.environ["AZURE_STORAGE_ACCESS_KEY"] = "t11uhpL2YqfeORTdQMKsKvoBBZBkiTLrccscNS5sKxmtBRKnE54b/lzDPAn9v8hAD8jHW5Gg9/wD+AStK6mU9A=="
         os.environ["AZURE_STORAGE_CONNECTION_STRING"] = "DefaultEndpointsProtocol=https;AccountName=mlflowdev01;AccountKey=t11uhpL2YqfeORTdQMKsKvoBBZBkiTLrccscNS5sKxmtBRKnE54b/lzDPAn9v8hAD8jHW5Gg9/wD+AStK6mU9A==;EndpointSuffix=core.windows.net"
+
+        @dataclasses.dataclass
+        class LinregType:
+            model_name: str
+            col_nm: List[str]
+            coef: List[float]
+            intercept: float
+            serialized_linreg_model: bytes
+            created_dt: str
+            run_id: str
+            registered_model_name: str
+            registered_model_version: str
+
         mlflow.set_tracking_uri("http://20.93.3.160:5000")
         mlflow.set_experiment('test')
         experiment = mlflow.get_experiment_by_name('test')
@@ -101,6 +113,4 @@ def main():
                       "registered_model_version"]
     )
     print(linreg_test_fit[:1])
-    print(sys.version)
-    print("Hello, World!")
-
+    print('Hello World!')
