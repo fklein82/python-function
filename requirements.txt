@@ -3,3 +3,4 @@ greenplum-python
 mlflow
 numpy
 pandas
+scikit-learn
