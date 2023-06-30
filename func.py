@@ -1,12 +1,8 @@
 import greenplumpython as gp
 from typing import List
-from sklearn.linear_model import LinearRegression
-import numpy as np
-import pickle
-import mlflow
 import dataclasses
-import datetime
-import os
+import sys
+
 
 
 
@@ -42,6 +38,12 @@ def main():
 
     @gp.create_column_function
     def linreg_func(length: List[float], shucked_weight: List[float], rings: List[int]) -> LinregType:
+        from sklearn.linear_model import LinearRegression
+        import numpy as np
+        import pickle
+        import mlflow
+        import datetime
+        import os
         os.environ["AZURE_STORAGE_ACCESS_KEY"] = "t11uhpL2YqfeORTdQMKsKvoBBZBkiTLrccscNS5sKxmtBRKnE54b/lzDPAn9v8hAD8jHW5Gg9/wD+AStK6mU9A=="
         os.environ["AZURE_STORAGE_CONNECTION_STRING"] = "DefaultEndpointsProtocol=https;AccountName=mlflowdev01;AccountKey=t11uhpL2YqfeORTdQMKsKvoBBZBkiTLrccscNS5sKxmtBRKnE54b/lzDPAn9v8hAD8jHW5Gg9/wD+AStK6mU9A==;EndpointSuffix=core.windows.net"
         mlflow.set_tracking_uri("http://20.93.3.160:5000")
@@ -99,3 +101,6 @@ def main():
                       "registered_model_version"]
     )
     print(linreg_test_fit[:1])
+    print(sys.version)
+    print("Hello, World!")
+
