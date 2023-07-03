@@ -113,4 +113,4 @@ def main():
                       "registered_model_version"]
     )
     print(linreg_test_fit[:1])
-    print('Hello World!')
+    return 'Hello World!'
