@@ -1,4 +1,4 @@
-# Python Function
+# Machine Learning Python Function
 
 This repo contains a Machine Learning Python Function that can be deployed as a TAP workload.
 
