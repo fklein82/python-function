@@ -19,11 +19,11 @@ jobs:
       id: date
       run: echo "::set-output name=date::$(date +'%Y-%m-%d-%H-%M-%S')"
     - name: Build the Docker image # push The image to the docker hub
-      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }} --tag registry.fklein.me/sarycom/src-website:${{ steps.date.outputs.date }}
+      run: docker build . --file Dockerfile --tag $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }} --tag registry.fklein.me/mlops/jupyter:${{ steps.date.outputs.date }}
     - name: DockerHub Push
       run: docker push $DOCKER_USER/$REPO_NAME:${{ steps.date.outputs.date }}
     - name: Fklein Harbor login
       run: | # log into Personal Harbor account
         docker login registry.fklein.me -u $HARBOR_USER -p $HARBOR_PASSWORD  
     - name: fklein harbor Push
-      run: docker push registry.fklein.me/sarycom/src-website:${{ steps.date.outputs.date }}
+      run: docker push registry.fklein.me/mlops/jupyter:${{ steps.date.outputs.date }}
