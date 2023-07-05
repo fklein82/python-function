@@ -32,7 +32,7 @@ To see samples of code deployable as a Function (FaaS) experience, visit the [sa
 To add the accelerator in Tanzu Application Platform
 
 ~~~
-tanzu acc create inclusion-node-front --git-repo https://github.com/fklein82/python-function --git-branch main --interval 5s\n
+tanzu acc create greenplum-python --git-repo https://github.com/fklein82/python-function --git-branch main --interval 5s\n
 ~~~
 
 ## Deploying
@@ -44,7 +44,7 @@ Please see [DEPLOYING.md](DEPLOYING.md) on how to build, deploy, and test your n
 
 tanzu apps workload create Jupyter \
   --git-repo https://github.com/fklein82/python-function \
-  --git-branch dev \
+  --git-branch main \
   --param dockerfile=./Dockerfile \
   --type web
 
