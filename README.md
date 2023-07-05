@@ -40,14 +40,38 @@ tanzu acc create greenplum-python --git-repo https://github.com/fklein82/python-
 Please see [DEPLOYING.md](DEPLOYING.md) on how to build, deploy, and test your newly built function.
 # Deploying
 
-### Add Jupyter Nodebook with TAP
+### Add Jupyter Nodebook with TAP (example)
 
-tanzu apps workload create Jupyter \
+~~~
+tanzu apps workload create jupyter \
   --git-repo https://github.com/fklein82/python-function \
   --git-branch main \
   --param dockerfile=./Dockerfile \
+  --label apps.tanzu.vmware.com/has-tests=true \
   --type web
+~~~
 
+## Build the docker image for jupyter:
+~~~
+docker build . --file Dockerfile --tag jupyter-for-tap:1.0
+
+docker tag jupyter-for-tap:1.0 registry.fklein.me/mlops/jupyter-for-tap:1.0
+
+docker login registry.fklein.me
+
+docker push registry.fklein.me/mlops/jupyter-for-tap:1.0
+~~~
+
+## Deploy as web service on tap
+Finally, deploy to TAP:
+
+~~~
+tanzu apps workload create jupyter-nodebook-v2 \
+  --type web \
+  --label app.kubernetes.io/part-of=jupyter-app \
+    --annotation autoscaling.knative.dev/min-scale=1 \
+  --image registry.fklein.me/mlops/jupyter:2023-07-05-16-26-29
+~~~
 
 ### Deploying to Kubernetes as a TAP workload with Tanzu CLI
 
