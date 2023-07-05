@@ -104,7 +104,7 @@ Finally, deploy to TAP:
 tanzu apps workload create jupyter-nodebook-v2 \
   --type web \
   --label app.kubernetes.io/part-of=jupyter-app \
-    --annotation autoscaling.knative.dev/min-scale=1 \
+  --annotation autoscaling.knative.dev/min-scale=1 \
   --image registry.fklein.me/mlops/jupyter:2023-07-05-16-26-29
 ~~~
 
